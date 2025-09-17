@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import css from "./App.module.css";
+import CafeInfo from "../CafeInfo/CafeInfo";
+import { useState } from "react";
+import VoteOptions from "../VoteOptions/VoteOptions";
+import type { Votes, VoteType } from "../../types/votes";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  // Початковий стан
+  const initialVotes: Votes = { good: 0, neutral: 0, bad: 0 };
+  const [votes, setVotes] = useState<Votes>(initialVotes);
+
+  // Функція для голосування
+  const handleVote = (type: VoteType) => {
+    setVotes({
+      ...votes,
+      [type]: votes[type] + 1,
+    });
+  };
+
+  // Функція для скидання голосів
+  const resetVotes = () => {
+    setVotes(initialVotes);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className={css.app}>
+      <CafeInfo />
+      <VoteOptions
+        onVote={handleVote}
+        onReset={resetVotes}
+        canReset={votes.good + votes.neutral + votes.bad > 0}
+      />
+    </div>
+  );
 }
-
-export default App
