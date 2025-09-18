@@ -1,17 +1,12 @@
-//* 🔹 Imports
 import css from "./VoteOptions.module.css";
 import type { VoteType } from "../../types/votes";
-//! --------------------------------------
 
-//! 🔹 Interface
 interface VoteOptionsProps {
   onVote: (type: VoteType) => void;
   onReset: () => void;
   canReset: boolean;
 }
-//! --------------------------------------
 
-//! 🔹 Component
 export default function VoteOptions({
   onVote,
   onReset,
@@ -38,4 +33,3 @@ export default function VoteOptions({
     </div>
   );
 }
-//! -------------------
